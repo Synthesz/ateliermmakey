@@ -10,6 +10,7 @@
 
         body {
             margin: 0;
+            padding: 0px;
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -89,6 +90,12 @@
             }
         }
 
+        .scramble{
+
+            font-family: "Plus Jakarta Sans", serif;
+
+        }
+
     </style>
 
 </head>
@@ -97,11 +104,11 @@
         <div class="top-container">
             <img src="images/subway-up-arrow.svg" alt="subway-up-arrow">
             <img src="images/train-icon.svg" alt="train-icon" class="border-icon">
-            <p>Design is the intermediary between</p>
+            <p class="scramble">Design is the intermediary between</p>
         </div>
         <hr>
         <div class="bottom-container">
-            <p>information and understanding</p>
+            <p class="scramble">information and understanding</p>
             <img src="images/disabled-icon.svg" alt="disabled-icon" class="border-icon">
             <img src="images/subway-up-arrow-rotated.svg" alt="subway-up-arrow-rotated">
         </div>
@@ -110,7 +117,7 @@
     <div class="yellow-container">
 
         <img src="images/train-icon-black.svg" alt="train-icon-black" class="border-icon-black">
-        <p>理解</p>
+        <p class="scramble">理解</p>
         <img src="images/disabled-icon-black.svg" alt="disabled-icon-black" class="border-icon-black">
         <p>信息</p>
         <img src="images/car-icon-black.svg" alt="car-icon-black" class="border-icon-black">
@@ -118,6 +125,49 @@
         <img src="images/bus-icon-black.svg" alt="bus-icon-black" class="border-icon-black">
 
     </div>
+
+    <script>
+
+        const paragraphs = document.querySelectorAll('.scramble');
+        const scrambleCharacters = "!@#$%^&*()_+=-{}[];:,.<>?/|~";
+        let revealSpeed = 50;
+
+         // Function to scramble and reveal text for each paragraph
+        
+        function scrambleText(paragraph,originalText){
+
+            let revealIndex = 0;
+
+            function updateText(){
+
+                const scrambledText = originalText.split('').map((char, index) => {
+                    if (index < revealIndex) {
+                        return char; // Keep revealed character
+                    }
+                    return scrambleCharacters[Math.floor(Math.random() * scrambleCharacters.length)];
+                }).join('');
+
+                paragraph.textContent = scrambledText;
+
+                if (revealIndex < originalText.length) {
+                    revealIndex++;
+                    setTimeout(updateText, revealSpeed); // Adjust speed here
+                } else {
+                    paragraph.textContent = originalText; // Final reveal
+                }
+
+            }
+
+            updateText();
+
+        }
+
+        paragraphs.forEach(paragraph => {
+            const originalText = paragraph.textContent;
+            scrambleText(paragraph, originalText);
+        });
+
+    </script>
 
 </body>
 </html>
